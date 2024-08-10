@@ -8,24 +8,41 @@ import {Book} from "../store/books.model";
   imports: [FormsModule],
   template: `
     <form #bookForm="ngForm">
-      <label for="author">Author</label>
-      <input name="author" [(ngModel)]="$author" required />
+      <span class="form-field">
+        <label for="author">Author</label>
+        <input name="author" [(ngModel)]="$author" required/>
+      </span>
 
-      <label for="name">Name</label>
-      <input name="name" [(ngModel)]="$name" required />
+      <span class="form-field">
+        <label for="name">Name</label>
+        <input name="name" [(ngModel)]="$name" required/>
+      </span>
 
-      <button (click)="submitBook()" [disabled]="bookForm.invalid">submit</button>
+      <button (click)="submitBook()" [disabled]="bookForm.invalid">Add Book</button>
     </form>
   `,
-  styles: ``
+  styles: `
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 40%;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+    }
+  `
 })
 export class AddBookComponent {
-  $author = signal('')
-  $name = signal('')
+  $author = signal('');
+  $name = signal('');
 
-  submit = output<Book>()
+  submit = output<Book>();
 
   submitBook() {
-    this.submit.emit({id: crypto.randomUUID(), name: this.$name(), author: this.$author()})
+    this.submit.emit({id: crypto.randomUUID(), name: this.$name(), author: this.$author()});
+    this.$author.set('')
+    this.$name.set('')
   }
 }

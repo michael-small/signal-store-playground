@@ -33,6 +33,7 @@ export const BooksStore = signalStore(
     return {
       addBook: rxMethod<Book>(
         pipe(
+          tap(() => patchState(store, ({isLoading: true}))),
           exhaustMap((book) => {
             return bookService.addBook(book).pipe(
               tapResponse({
@@ -46,6 +47,7 @@ export const BooksStore = signalStore(
       ),
       deleteBook: rxMethod<Book>(
         pipe(
+          tap(() => patchState(store, ({isLoading: true}))),
           exhaustMap((book) => {
             return bookService.deleteBook(book).pipe(
               tapResponse({
