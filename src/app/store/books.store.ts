@@ -44,6 +44,18 @@ export const BooksStore = signalStore(
           })
         )
       ),
+      deleteBook: rxMethod<Book>(
+        pipe(
+          exhaustMap((book) => {
+            return bookService.deleteBook(book).pipe(
+              tapResponse({
+                next: (books) => patchState(store, { books: [...store.books().filter(_book => _book.id !== book.id)], isLoading: false }),
+                error: (error: HttpErrorResponse) => console.log('error'),
+              })
+            )
+          })
+        )
+      ),
       loadBooks: rxMethod<void>(
         pipe(
           tap(() => patchState(store, ({isLoading: true}))),

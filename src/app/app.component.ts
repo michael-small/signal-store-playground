@@ -1,17 +1,15 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {BooksStore} from "./store/books.store";
 import {JsonPipe} from "@angular/common";
+import {Book} from "./store/books.model";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   template: `
-<!--    @if ($isLoading()) {-->
-<!--      Loading...-->
-<!--    } @else {-->
-<!--      <pre>{{ $books() | json }}</pre>-->
-<!--    }-->
-    <pre>{{ $books() | json }}</pre>
+    @for (book of $books(); track $index) {
+      <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>
+    }
     <button (click)="addBook()">add book</button>
   `,
   imports: [
@@ -32,5 +30,9 @@ export class AppComponent implements OnInit {
     const uuid = crypto.randomUUID()
     console.log(uuid)
     this.store.addBook({id: crypto.randomUUID(), author: 'jerry', name: 'hey'}).unsubscribe()
+  }
+
+  deleteBook(book: Book) {
+    this.store.deleteBook(book);
   }
 }

@@ -1,17 +1,12 @@
 {
   "books": [
     {
-      "id": "0b498263-caa6-4b9f-8ab6-61d9cd0ba890",
-      "name": "Evil Guys Inc",
-      "author": "John Doe"
-    },
-    {
       "id": "17ebbcf6-89c1-46fb-b656-686fe73b3a61",
       "author": "jerry",
       "name": "hey"
     },
     {
-      "id": "0e17a674-7826-4c22-b7a9-471511d7832f",
+      "id": "06474942-cd0d-4e3c-aa93-3efd3b344978",
       "author": "jerry",
       "name": "hey"
     }
