@@ -1,34 +1,39 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, Signal} from '@angular/core';
 import {BooksStore} from "./store/books.store";
 import {JsonPipe} from "@angular/common";
 import {Book} from "./store/books.model";
+import {AddBookComponent} from "./components/add-book.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   template: `
-    @for (book of $books(); track $index) {
-      <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>
+    @if ($isLoading()) {
+      <p>Loading...</p>
+    } @else {
+      @for (book of $books(); track $index) {
+        <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>
+      } @empty {
+        <p>No books</p>
+      }
     }
-    <button (click)="addBook()">add book</button>
+    <app-add-book (submit)="store.addBook($event)" />
   `,
   imports: [
-    JsonPipe
+    JsonPipe, AddBookComponent
   ],
   providers: [BooksStore]
 })
 export class AppComponent implements OnInit {
   store = inject(BooksStore);
-  $isLoading = this.store.isLoading;
-  $books = this.store.books;
+  $isLoading: Signal<boolean> = this.store.isLoading;
+  $books: Signal<Book[]> = this.store.books;
 
   ngOnInit() {
     this.store.loadBooks();
   }
 
   addBook() {
-    const uuid = crypto.randomUUID()
-    console.log(uuid)
     this.store.addBook({id: crypto.randomUUID(), author: 'jerry', name: 'hey'}).unsubscribe()
   }
 
