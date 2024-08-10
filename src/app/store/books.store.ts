@@ -7,6 +7,7 @@ import {delay, exhaustMap, pipe, tap} from "rxjs";
 import {tapResponse} from "@ngrx/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {setError, setFulfilled, setPending, withRequestStatus} from "./request-status.feature";
+import {withLogger} from "./logger.feature";
 
 type BooksState = {
   books: Book[];
@@ -17,7 +18,7 @@ const initialState: BooksState = {
 };
 
 export const BooksStore = signalStore(
-  withState({...initialState, _privateThing: 0}),
+  withState({...initialState}),
   withRequestStatus(),
   withComputed((store) => {
       const booksLength = computed(() => store.books().length)
@@ -26,6 +27,7 @@ export const BooksStore = signalStore(
       }
     }
   ),
+  withLogger('books'),
   withMethods((store, bookService = inject(BooksService)) => {
     // Helpers here, using const functions
     return {
