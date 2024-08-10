@@ -8,16 +8,19 @@ import {AddBookComponent} from "./components/add-book.component";
   selector: 'app-root',
   standalone: true,
   template: `
-    @if ($isLoading()) {
+    <app-add-book (submit)="store.addBook($event)" />
+
+    @if (store.isPending()) {
       <p>Loading...</p>
-    } @else {
+    } @else if (store.isFulfilled()) {
       @for (book of $books(); track $index) {
         <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>
       } @empty {
         <p>No books</p>
       }
+    } @else if (store.error()) {
+      <pre>d{{store.error()}}</pre>
     }
-    <app-add-book (submit)="store.addBook($event)" />
   `,
   imports: [
     JsonPipe, AddBookComponent
@@ -26,7 +29,6 @@ import {AddBookComponent} from "./components/add-book.component";
 })
 export class AppComponent implements OnInit {
   store = inject(BooksStore);
-  $isLoading: Signal<boolean> = this.store.isLoading;
   $books: Signal<Book[]> = this.store.books;
 
   ngOnInit() {
