@@ -36,7 +36,7 @@ export const BooksStore = signalStore(
           exhaustMap((book) => {
             return bookService.addBook(book).pipe(
               tapResponse({
-                next: (books) => patchState(store, { books: books, isLoading: false }),
+                next: (books) => patchState(store, { books: [...store.books(), book], isLoading: false }),
                 error: (error: HttpErrorResponse) => console.log('error'),
                 }
               )

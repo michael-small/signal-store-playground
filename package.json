@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "json-server": "json-server --watch json-server/db.json"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "@angular/router": "^18.1.0",
     "@ngrx/operators": "^18.0.2",
     "@ngrx/signals": "^18.0.2",
+    "json-server": "^1.0.0-beta.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
