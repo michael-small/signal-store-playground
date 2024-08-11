@@ -1,13 +1,12 @@
 import {inject, Injectable} from '@angular/core';
-import {Book} from "./books.model";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {DataService} from "./features/with-data-service";
 import { EntityId } from '@ngrx/signals/entities';
 import {catchError, Observable, of} from "rxjs";
+import {DataService} from "./with-data-service";
+import {Book} from "../books.model";
 
 export type BookFilter = {
-  from: string;
-  to: string;
+
 }
 @Injectable({providedIn: 'root'})
 export class BooksWithDataService implements DataService<Book, BookFilter>{
@@ -45,6 +44,7 @@ export class BooksWithDataService implements DataService<Book, BookFilter>{
   }
 
   load(filter: BookFilter): Observable<Book[]> {
+    console.log('loading')
     return this.http.get<Book[]>(this.url).pipe(
       catchError(_ => of<Book[]>([]))
     )

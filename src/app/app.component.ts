@@ -3,25 +3,25 @@ import {BooksStore} from "./store/books.store";
 import {JsonPipe} from "@angular/common";
 import {Book} from "./store/books.model";
 import {AddBookComponent} from "./components/add-book.component";
-import {BooksWithDataComponent} from "./store/books-wth-data-service.component";
+import {BooksWithDataComponent} from "./store/withDataService-rxjs/books-wth-data-service.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   template: `
-    <app-add-book (submit)="store.addBook($event)" />
+<!--    <app-add-book (submit)="store.addBook($event)" />-->
 
-    @if (store.isPending()) {
-      <p>Loading...</p>
-    } @else if (store.isFulfilled()) {
-      @for (book of $books(); track $index) {
-        <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>
-      } @empty {
-        <p>No books</p>
-      }
-    } @else if (store.error()) {
-      <pre>d{{store.error()}}</pre>
-    }
+<!--    @if (store.isPending()) {-->
+<!--      <p>Loading...</p>-->
+<!--    } @else if (store.isFulfilled()) {-->
+<!--      @for (book of $books(); track $index) {-->
+<!--        <pre>{{ book | json }}: <button (click)="deleteBook(book)">delete</button></pre>-->
+<!--      } @empty {-->
+<!--        <p>No books</p>-->
+<!--      }-->
+<!--    } @else if (store.error()) {-->
+<!--      <pre>d{{store.error()}}</pre>-->
+<!--    }-->
     <app-books-with-data />
   `,
   imports: [
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   $books: Signal<Book[]> = this.store.books;
 
   ngOnInit() {
-    this.store.loadBooks();
+    // this.store.loadBooks();
   }
 
   addBook() {

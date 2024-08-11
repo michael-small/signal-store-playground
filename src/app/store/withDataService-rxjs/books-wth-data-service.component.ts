@@ -1,8 +1,8 @@
 import {Component, effect, inject, OnInit} from '@angular/core';
-import {BooksStore} from "./books.store";
-import {Book} from "./books.model";
-import {AddBookComponent} from "../components/add-book.component";
 import {JsonPipe} from "@angular/common";
+import {AddBookComponent} from "../../components/add-book.component";
+import {Book} from "../books.model";
+import {BooksWithDataServiceStore} from "./books-with-data-service.store";
 
 @Component({
   selector: 'app-books-with-data',
@@ -23,14 +23,13 @@ import {JsonPipe} from "@angular/common";
 })
 
 export class BooksWithDataComponent implements OnInit {
-  booksWithDataStore = inject(BooksStore);
-  $books = this.booksWithDataStore.books;
+  booksWithDataStore = inject(BooksWithDataServiceStore);
+  $books = this.booksWithDataStore.bookEntities;
   ngOnInit() {
-    this.booksWithDataStore.loadBooks();
+    this.booksWithDataStore.loadBookEntities();
   }
-
   addBook(book: Book) {
-    this.booksWithDataStore.addBook({id: crypto.randomUUID(), author: 'jerry', name: 'hey'}).unsubscribe()
+    this.booksWithDataStore.createBook({id: crypto.randomUUID(), author: 'jerry', name: 'hey'})
   }
 
   deleteBook(book: Book) {

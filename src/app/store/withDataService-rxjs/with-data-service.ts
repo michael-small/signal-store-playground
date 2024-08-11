@@ -26,7 +26,6 @@ import {
 import {exhaustMap, Observable, pipe, tap} from "rxjs";
 import {rxMethod} from "@ngrx/signals/rxjs-interop";
 import {tapResponse} from "@ngrx/operators";
-import {setFulfilled} from "./request-status.feature";
 import {HttpErrorResponse} from "@angular/common/http";
 
 export type EntityState<Entity> = {
@@ -308,9 +307,14 @@ export function withDataService<
               exhaustMap(() => {
                 const filter = store[filterKey] as Signal<F>;
                 return dataService.load(filter()).pipe(
-                  tapResponse((current) => {
+                  tapResponse((result) => {
+                    patchState(
+                      store,
+                      prefix
+                        ? setAllEntities(result, { collection: prefix })
+                        : setAllEntities(result)
+                    );
                     store[callStateKey] && patchState(store, setLoaded(prefix));
-                    patchState(store, { [currentKey]: current });
                   }, (errorResponse: HttpErrorResponse) => store[callStateKey] && patchState(store, setError(errorResponse, prefix)))
                 )
               })

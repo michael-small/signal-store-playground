@@ -1,11 +1,12 @@
 import {signalStore, type} from '@ngrx/signals';
-import {Book} from "./books.model";
-import {withDataService} from "./features/with-data-service";
 import {BooksWithDataService} from "./books-with-data-service.service";
 import {withEntities} from "@ngrx/signals/entities";
-import {withCallState} from "./features/with-call-state";
+import {withCallState} from "./with-call-state";
+import {Book} from "../books.model";
+import {withDataService} from "./with-data-service";
 
-export const BooksStore = signalStore(
+export const BooksWithDataServiceStore = signalStore(
+  {providedIn: 'root'},
   withCallState({
     collection: 'book'
   }),
@@ -15,9 +16,7 @@ export const BooksStore = signalStore(
   }),
   withDataService({
     dataServiceType: BooksWithDataService,
-    // Don't have much of a use for a filter at the moment, just going to let this stay in
-    //     to signify I didn't do so lol
-    filter: { from: 'Paris', to: 'New York' },
+    filter: { }, // Ignore this, I may pull it out
     collection: 'book'
   }),
 );
