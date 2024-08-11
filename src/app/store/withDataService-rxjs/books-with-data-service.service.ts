@@ -45,6 +45,7 @@ export class BooksWithDataService implements DataService<Book, BookFilter>{
 
   load(filter: BookFilter): Observable<Book[]> {
     console.log('loading')
+    // TODO - actually add in filter
     return this.http.get<Book[]>(this.url).pipe(
       catchError(_ => of<Book[]>([]))
     )
