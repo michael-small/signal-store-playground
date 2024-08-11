@@ -3,6 +3,7 @@ import {BooksStore} from "./store/books.store";
 import {JsonPipe} from "@angular/common";
 import {Book} from "./store/books.model";
 import {AddBookComponent} from "./components/add-book.component";
+import {BooksWithDataComponent} from "./store/books-wth-data-service.component";
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,10 @@ import {AddBookComponent} from "./components/add-book.component";
     } @else if (store.error()) {
       <pre>d{{store.error()}}</pre>
     }
+    <app-books-with-data />
   `,
   imports: [
-    JsonPipe, AddBookComponent
+    JsonPipe, AddBookComponent, BooksWithDataComponent
   ],
   providers: [BooksStore]
 })

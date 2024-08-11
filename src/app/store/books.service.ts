@@ -10,7 +10,7 @@ export class BooksService {
 
   addBook(book: Book) {
     return this.http.post<Book>(this.url, book).pipe(
-      catchError(_ => of<Book[]>([]))
+      catchError(_ => of<Book>())
     )
   }
 
