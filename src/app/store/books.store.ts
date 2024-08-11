@@ -6,8 +6,8 @@ import {rxMethod} from "@ngrx/signals/rxjs-interop";
 import {delay, exhaustMap, pipe, tap} from "rxjs";
 import {tapResponse} from "@ngrx/operators";
 import {HttpErrorResponse} from "@angular/common/http";
-import {setError, setFulfilled, setPending, withRequestStatus} from "./request-status.feature";
-import {withLogger} from "./logger.feature";
+import {setError, setFulfilled, setPending, withRequestStatus} from "./features/request-status.feature";
+import {withLogger} from "./features/logger.feature";
 
 type BooksState = {
   books: Book[];
