@@ -16,7 +16,7 @@ export const BooksWithDataServiceStore = signalStore(
   }),
   withDataService({
     dataServiceType: BooksWithDataService,
-    filter: { }, // Ignore this, I may pull it out
+    filter: { }, // TODO - actually make a good filter example
     collection: 'book'
   }),
 );
