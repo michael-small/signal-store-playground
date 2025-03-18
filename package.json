@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently 'npm run ng serve' 'npm run json-server --watch json-server/db.json'",
+    "sleep5s": "node -e \"setTimeout(() => process.exit(0), 5000)\"",
+    "start": "concurrently 'npm run ng serve' 'npm run sleep5s && npm run json-server --watch json-server/db.json'",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
