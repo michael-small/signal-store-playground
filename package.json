@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently 'npm run json-server --watch json-server/db.json' 'npm run ng serve'",
+    "start": "concurrently 'npm run json-server -s --watch json-server/db.json' 'npm run ng serve'",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
