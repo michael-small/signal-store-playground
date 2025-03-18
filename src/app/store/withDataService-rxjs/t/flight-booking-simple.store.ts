@@ -1,0 +1,21 @@
+import { signalStore } from '@ngrx/signals';
+
+import { withEntities } from '@ngrx/signals/entities';
+import {
+  withCallState,
+  withDataService,
+  withUndoRedo,
+} from '@angular-architects/ngrx-toolkit';
+import { FlightService } from './flight.service';
+import { Flight } from './flight';
+
+export const SimpleFlightBookingStore = signalStore(
+  { providedIn: 'root' },
+  withCallState(),
+  withEntities<Flight>(),
+  withDataService({
+    dataServiceType: FlightService,
+    filter: { from: 'Paris', to: 'New York' },
+  }),
+  withUndoRedo()
+);
